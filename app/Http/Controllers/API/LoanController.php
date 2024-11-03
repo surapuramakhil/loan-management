@@ -5,10 +5,28 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Loan;
 use App\Http\Requests\LoanRequest;
+use App\Services\LoanService;
 use Illuminate\Http\JsonResponse;
 
 class LoanController extends Controller
 {
+
+    /**
+     * @var LoanService
+     */
+    private LoanService $loanService;
+
+    /**
+     * LoanController constructor
+     * 
+     * @param LoanService $loanService
+     */
+    public function __construct(LoanService $loanService)
+    {
+        $this->loanService = $loanService;
+    }
+
+
     /**
      * Display a listing of loans
      */
@@ -31,7 +49,7 @@ class LoanController extends Controller
      */
     public function store(LoanRequest $request): JsonResponse
     {
-        $loan = Loan::create($request->validated());
+        $loan = $this->loanService->createLoan($request->validated());
         return response()->json(['data' => $loan], 201);
     }
 
@@ -40,7 +58,7 @@ class LoanController extends Controller
      */
     public function update(LoanRequest $request, Loan $loan): JsonResponse
     {
-        $loan->update($request->validated());
+        $this->loanService->updateLoan($loan, $request->validated());
         return response()->json(['data' => $loan]);
     }
 
@@ -49,7 +67,7 @@ class LoanController extends Controller
      */
     public function destroy(Loan $loan): JsonResponse
     {
-        $loan->delete();
-        return response()->json(null, 204);
+        $this->loanService->deleteLoan($loan);
+        return response()->json('Load deleted', 204);
     }
 }

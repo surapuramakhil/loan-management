@@ -84,4 +84,18 @@ return [
     ],
 
     'extensions' => [],
+    
+    'openapi' => [
+        'security_schemes' => [
+            'bearerAuth' => [
+                'type' => 'http',
+                'scheme' => 'bearer',
+                'bearerFormat' => 'sanctum',
+                'description' => 'Enter your bearer token',
+            ],
+        ],
+        'security' => [
+            ['bearerAuth' => []],
+        ],
+    ],
 ];

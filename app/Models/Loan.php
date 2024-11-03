@@ -11,6 +11,8 @@ class Loan extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'lender_id',
+        'borrower_id',
         'amount',
         'interest_rate',
         'duration_years'
@@ -30,4 +32,15 @@ class Loan extends Model
     {
         return $query->whereNull('deleted_at');
     }
+
+    public function lender()
+    {
+        return $this->belongsTo(User::class, 'lender_id');
+    }
+
+    public function borrower()
+    {
+        return $this->belongsTo(User::class, 'borrower_id');
+    }
+    
 }
