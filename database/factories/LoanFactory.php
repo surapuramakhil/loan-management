@@ -14,7 +14,7 @@ class LoanFactory extends Factory
         return [
             'amount' => $this->faker->randomFloat(2, 1000, 999999),
             'interest_rate' => $this->faker->randomFloat(2, 1, 30),
-            'duration_years' => $this->faker->numberBetween(1, 30)
+            'duration_years' => $this->faker->numberBetween(1, 30),
         ];
     }
 }

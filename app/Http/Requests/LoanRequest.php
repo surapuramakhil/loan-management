@@ -18,7 +18,7 @@ class LoanRequest extends FormRequest
         return [
             'borrower_id' => ['required', 'exists:users,id', 'different:lender_id', Rule::notIn([Auth::id()])],
             'amount' => ['required', 'numeric', 'min:1', 'max:999999999.99'],
-            'interest_rate' => ['required', 'numeric', 'min:0', 'max:100'],
+            'interest_rate' => ['required', 'numeric', 'min:5', 'max:100'],
             'duration_years' => ['required', 'integer', 'min:1', 'max:30']
         ];
     }
@@ -32,7 +32,7 @@ class LoanRequest extends FormRequest
             'amount.max' => 'The loan amount cannot exceed 999,999,999.99',
             'interest_rate.required' => 'The interest rate is required',
             'interest_rate.numeric' => 'The interest rate must be a number',
-            'interest_rate.min' => 'The interest rate must be at least 0',
+            'interest_rate.min' => 'The interest rate must be at least 5',
             'interest_rate.max' => 'The interest rate cannot exceed 100',
             'duration_years.required' => 'The loan duration is required',
             'duration_years.integer' => 'The loan duration must be an integer',

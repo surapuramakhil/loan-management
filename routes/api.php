@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\LoanController;
+use App\Http\Controllers\API\PaymentController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -18,4 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('loans', [LoanController::class, 'store']);
     Route::put('loans/{loan}', [LoanController::class, 'update']);
     Route::delete('loans/{loan}', [LoanController::class, 'destroy']);
+
+    Route::post('loans/{loan}/pay', [PaymentController::class, 'process'])
+        ->name('loans.pay');
 });

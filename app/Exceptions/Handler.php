@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 use App\Exceptions\UnauthorizedException;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -27,14 +28,12 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+            Log::error($e->getMessage(), ['exception' => $e]);
         });
 
         // Handle UnauthorizedException
         $this->renderable(function (UnauthorizedException $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'error' => 'Unauthorized action'
-            ], 403);
+            return $e->render();
         });
 
         // Handle AuthenticationException

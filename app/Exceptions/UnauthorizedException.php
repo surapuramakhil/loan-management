@@ -11,7 +11,7 @@ class UnauthorizedException extends Exception
         parent::__construct($message, 403);
     }
 
-    public function render($request)
+    public function render()
     {
         return response()->json([
             'message' => $this->getMessage(),
